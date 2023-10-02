@@ -1,9 +1,12 @@
 robot = rigidBodyTree;
 
+
 db = 0.015;
 d1 = 0.145;d2 = -0.135;d3 = 0.490 ;d4 = 0.135; d5 = 0.370; d6 = 0.100;d7 = 0.065;
 th1 = 0;th2 = 0;th3 = 0;th4 = 0;th5 = 0;th6 = 0;th6 = 0;
-th_off1 =pi/2 ;th_off2 = pi; th_off3 = pi; th_off4 = pi;th_off5 = pi; th_off6 = pi;th_off7 = pi/2;
+% th1 = deg2rad(0.193);th2 = deg2rad(-0.142);th3 = deg2rad(0.074);th4 = -deg2rad(0.131);th5 = deg2rad(0.039-90); th6 = -deg2rad(0.001);
+th_off1 =pi/2 ;th_off2 = pi; th_off3 = pi; th_off4 = pi;th_off5 = pi; th_off6 = pi;%th_off7 = pi/2;
+th_off7 = 0;
 alp1 =pi/2 ;alp2 =pi/2 ;alp3 =pi/2 ;alp4 =pi/2 ;alp5 =pi/2 ;alp6 =pi/2 ; alp7 = 0;
 
 tform_base = dh(0,db,0,0);
@@ -15,6 +18,7 @@ tform4 = dh(th4+th_off5,d5,0,alp5);
 tform5 = dh(th5+th_off6,d6,0,alp6);
 tform6 = dh(th6+th_off7,d7,0,alp7);
 
+total_tf = tform0*tform1*tform2*tform3*tform4*tform5*tform6
 
 body_base = rigidBody('body_base');
 fix_b = rigidBodyJoint('fix_b','revolute');
@@ -78,6 +82,7 @@ Cconfig = homeConfiguration(robot);
 % Cconfig(5).JointPosition = pi/2;
 % Cconfig(6).JointPosition = pi/2;
 
+%hello
 
 show(robot,Cconfig);
 hold on
