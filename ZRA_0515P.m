@@ -20,6 +20,15 @@ tform6 = dh(th6+th_off7,d7,0,alp7);
 
 total_tf = tform0*tform1*tform2*tform3*tform4*tform5*tform6
 
+cam0 = dh(pi/2,0.05,0,0);
+cam1 = trvec2tform([0,-0.095,0])
+cam2 = trvec2tform([-0.034,0,0])
+cam_mat = cam0*cam1*cam2
+
+tool_0 = dh(0,0.172,0,0);
+tool_1 = trvec2tform([0,-0.01,0]);
+tool = tool_0*tool_1;
+
 body_base = rigidBody('body_base');
 fix_b = rigidBodyJoint('fix_b','revolute');
 setFixedTransform(fix_b,tform_base); 
@@ -69,6 +78,38 @@ endeffector = rigidBodyJoint('endeffector','fixed');
 setFixedTransform(endeffector,tform6); 
 body7.Joint = endeffector;
 addBody(robot,body7,'body6'); % 로봇의 시작점이 base와 붙어있다.
+%=== camera=====================
+body8 = rigidBody('body8');
+jnt_cam0 = rigidBodyJoint('jnt_cam0','fixed');
+setFixedTransform(jnt_cam0,cam0); 
+body8.Joint = jnt_cam0;
+addBody(robot,body8,'body7'); % 로봇의 시작점이 base와 붙어있다.
+
+body9 = rigidBody('body9');
+jnt_cam1 = rigidBodyJoint('jnt_cam1','fixed');
+setFixedTransform(jnt_cam1,cam1); 
+body9.Joint = jnt_cam1;
+addBody(robot,body9,'body8'); % 로봇의 시작점이 base와 붙어있다.
+
+camera = rigidBody('camera');
+jnt_cam2 = rigidBodyJoint('jnt_cam2','fixed');
+setFixedTransform(jnt_cam2,cam2); 
+camera.Joint = jnt_cam2;
+addBody(robot,camera,'body9'); % 로봇의 시작점이 base와 붙어있다.
+%==========tool=====================
+
+tool0 = rigidBody('tool0');
+jnt_tool0 = rigidBodyJoint('jnt_tool0','fixed');
+setFixedTransform(jnt_tool0,tool); 
+tool0.Joint = jnt_tool0;
+addBody(robot,tool0,'body7'); % 로봇의 시작점이 base와 붙어있다.
+% 
+% tool1 = rigidBody('tool1');
+% jnt_tool1 = rigidBodyJoint('jnt_tool1','fixed');
+% setFixedTransform(jnt_tool1,tool_1); 
+% tool1.Joint = jnt_tool1;
+% addBody(robot,tool1,'tool0'); % 로봇의 시작점이 base와 붙어있다.
+
 
 % endeffector = rigidBody('endeffector');
 % addBody(robot,endeffector,'body7');
